@@ -1,3 +1,11 @@
+<?php
+  session_start();
+
+  if(!isset($_SESSION['user'])) {
+    header("location: login.php");
+  }
+?>
+
 <!-- Main jumbotron for a primary marketing message or call to action -->
       <div style="background:#09BCEF" class="jumbotron">
         <h1 style="color:white"><a style="text-decoration:none;" href="http://projectrockit.com.au/">Project Rockit</a></h1>

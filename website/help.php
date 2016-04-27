@@ -1,3 +1,11 @@
+<?php
+  session_start();
+
+  if(!isset($_SESSION['user'])) {
+    //header("location: login.php");
+  }
+?>
+
 <div style="background:#09BCEF" class="jumbotron">
         <h1 style="color:white">Help</h1>
         <p style="color:white">Place to look for help with bulling issues and this website</p>
