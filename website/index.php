@@ -29,7 +29,7 @@
 	<script type="text/javascript" charset="utf-8">
 			$(document).ready(function(){
 				$(function(){
-					$('#bodycontent').load('home.html');
+					$('#bodycontent').load('home.php');
 				});
 				$('#home').click(function(){
 					$('#homelink').addClass("active");
@@ -38,7 +38,7 @@
                                         $('#helplink').removeClass("active");
                                         $('#accountlink').removeClass("active");
 					$('#loglink').removeClass("active");
-					$('#bodycontent').load('home.html');
+					$('#bodycontent').load('home.php');
 					return false;
 				});
 				$('#mainhome').click(function(){
@@ -48,7 +48,7 @@
                                         $('#helplink').removeClass("active");
                                         $('#accountlink').removeClass("active");
 					$('#loglink').removeClass("active");
-					$('#bodycontent').load('home.html');
+					$('#bodycontent').load('home.php');
 					return false;
 				});
 				$('#record').click(function(){
@@ -58,7 +58,7 @@
                                         $('#helplink').removeClass("active");
                                         $('#accountlink').removeClass("active");
 					$('#loglink').removeClass("active");
-					$('#bodycontent').load('record.html');
+					$('#bodycontent').load('record.php');
 					return false;
 				});
 				$('#chat').click(function(){
@@ -68,7 +68,7 @@
                                         $('#helplink').removeClass("active");
                                         $('#accountlink').removeClass("active");
 					$('#loglink').removeClass("active");
-					$('#bodycontent').load('chat.html');
+					$('#bodycontent').load('chat.php');
 					return false;
 				});
 				$('#help').click(function(){
@@ -78,7 +78,7 @@
                                         $('#homelink').removeClass("active");
                                         $('#accountlink').removeClass("active");
 					$('#loglink').removeClass("active");
-					$('#bodycontent').load('help.html');
+					$('#bodycontent').load('help.php');
 					return false;
 				});
                                 $('#account').click(function(){
@@ -88,7 +88,7 @@
                                         $('#homelink').removeClass("active");
                                         $('#helplink').removeClass("active");
 					$('#loglink').removeClass("active");
-					$('#bodycontent').load('account.html');
+					$('#bodycontent').load('account.php');
 					return false;
 				});
                                 $('#log').click(function(){
@@ -126,11 +126,20 @@
         </div>
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-            <li id="recordlink"><a style="color:#09BCEF" href="" id="record">Record</a></li>
+	     <?php
+		if(isset($_SESSION['user'])) {
+   		  echo '<li id="recordlink"><a style="color:#09BCEF" href="" id="record">Record</a></li>';
+  		}
+	     ?>
+            
             <li id="chatlink"><a style="color:#09BCEF" href="" id="chat">Chat</a></li>
             <li id="helplink"><a style="color:#09BCEF" href="" id="help">Help</a></li>
-            <li id="accountlink"><a style="color:#09BCEF" href="" id="account">Account</a></li>
-	    <li id="loglink"><a style="color:#09BCEF" href="" id="log">Log Out</a></li>
+	    <?php
+		if(isset($_SESSION['user'])) {
+            	  echo '<li id="accountlink"><a style="color:#09BCEF" href="" id="account">Account</a></li>';
+	    	  echo '<li id="loglink"><a style="color:#09BCEF" href="" id="log">Log Out</a></li>';
+  		}
+	     ?>
           </ul>
         </div><!--/.nav-collapse -->
       </div>

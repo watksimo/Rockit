@@ -8,11 +8,19 @@
 
 <div style="background:#09BCEF" class="jumbotron">
         <h1 style="color:white">Chat</h1>
-        <p style="color:white">Email a member of Project Rockit</p>
+        <p style="color:white">Talk to us - we're listening! Send us a message, or call us on <a href="tel:+61435150280">0435 150 280</a>.</p>
       </div>
 
 
       <div class="container">
       
-	insert simple email webform thing here
+	<form action="MAILTO:someone@example.com" method="post" enctype="text/plain">
+Name:<br>
+<input  type="text" class="form-control" id="usr" style="width:50%"><br>
+E-mail:<br>
+<input type="text" class="form-control" id="usr" style="width:50%"><br>
+Comment:<br>
+<input  type="text" class="form-control" id="usr" style="height:200px; width:50%"><br><br>
+<button type="submit" class="btn btn-primary">Submit</button>
+</form>
       </div>
