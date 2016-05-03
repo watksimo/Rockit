@@ -37,19 +37,23 @@
   <body>
 
     <!-- Main jumbotron for a primary marketing message or call to action -->
-      <div style="background:#09BCEF" class="jumbotron">
-        <h1 style="color:white">Log In</h1>
-        <p style="color:white">text</p>
-      </div>
+      <a href="login.php"><div style="background:#09BCEF" class="jumbotron">
+        <h1 style="color:white">Create Account</h1>
+      </div></a>
     
     <div class="container">
       <div class="row">
         <div class="col-md-offset-5 col-md-3">
           <form action="php/checkLogin.php" method="post" class="form-login">
-            <h4>Welcome back.</h4>
-            <input type="text" name="userName" class="form-control input-sm chat-input" placeholder="username" />
-            </br>
-            <input type="text" name="userPassword" class="form-control input-sm chat-input" placeholder="password" />
+            <h4>Enter Details</h4>
+            <input type="text" name="name" class="form-control input-sm chat-input" placeholder="Name" />
+            <select name="type" class="form-control input-sm chat-input">
+              <option value="student">Student</option>
+              <option value="administrator">Administrator</option>
+            </select>
+            <input type="text" name="email" class="form-control input-sm chat-input" placeholder="Email" />
+            <input type="text" name="phone" class="form-control input-sm chat-input" placeholder="Phone" />
+            <input type="text" name="pass" class="form-control input-sm chat-input" placeholder="Password" />
             </br>
             <div class="wrapper">
               <span class="group-btn">     
@@ -58,9 +62,6 @@
               </span>
             </div>
           </form>
-          <span>
-            <a href="createAccount.php">Create Account</a>
-          </span>
         
         </div>
       </div>

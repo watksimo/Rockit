@@ -2,7 +2,7 @@
   session_start();
 
   if(!isset($_SESSION['user'])) {
-    //header("location: login.php");
+    header("location: login.php");
   }
 ?>
 
@@ -98,6 +98,7 @@
                                         $('#homelink').removeClass("active");
                                         $('#helplink').removeClass("active");
 					$('#accountlink').removeClass("active");
+          window.location.replace("php/logOut.php");
 					
 					return false;
 				});
@@ -127,18 +128,14 @@
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
 	     <?php
-		if(isset($_SESSION['user'])) {
-   		  echo '<li id="recordlink"><a style="color:#09BCEF" href="" id="record">Record</a></li>';
-  		}
+   		 echo '<li id="recordlink"><a style="color:#09BCEF" href="" id="record">Record</a></li>';
 	     ?>
             
-            <li id="chatlink"><a style="color:#09BCEF" href="" id="chat">Chat</a></li>
-            <li id="helplink"><a style="color:#09BCEF" href="" id="help">Help</a></li>
-	    <?php
-		if(isset($_SESSION['user'])) {
-            	  echo '<li id="accountlink"><a style="color:#09BCEF" href="" id="account">Account</a></li>';
-	    	  echo '<li id="loglink"><a style="color:#09BCEF" href="" id="log">Log Out</a></li>';
-  		}
+          <li id="chatlink"><a style="color:#09BCEF" href="" id="chat">Chat</a></li>
+          <li id="helplink"><a style="color:#09BCEF" href="" id="help">Help</a></li>
+          <li id="accountlink"><a style="color:#09BCEF" href="" id="account">Account</a></li>
+	    	  <li id="loglink"><a style="color:#09BCEF" href="" id="log">Log Out</a></li>
+
 	     ?>
           </ul>
         </div><!--/.nav-collapse -->
@@ -148,10 +145,6 @@
     
     <div class="container theme-showcase" role="main">
       <div id="bodycontent">
-
-      
-      
-      
       
 
       
