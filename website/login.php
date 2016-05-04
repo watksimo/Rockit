@@ -49,7 +49,7 @@
             <h4>Welcome back.</h4>
             <input type="text" name="userName" class="form-control input-sm chat-input" placeholder="username" />
             </br>
-            <input type="text" name="userPassword" class="form-control input-sm chat-input" placeholder="password" />
+            <input type="password" name="userPassword" class="form-control input-sm chat-input" placeholder="password" />
             </br>
             <div class="wrapper">
               <span class="group-btn">     

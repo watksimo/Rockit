@@ -4,6 +4,7 @@
   if(!isset($_SESSION['user'])) {
     header("location: login.php");
   }
+
 ?>
 
 <!DOCTYPE html>
@@ -103,8 +104,6 @@
 					return false;
 				});
 
-
-
 				
 			});
       </script>
@@ -127,16 +126,13 @@
         </div>
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-	     <?php
-   		 echo '<li id="recordlink"><a style="color:#09BCEF" href="" id="record">Record</a></li>';
-	     ?>
-            
-          <li id="chatlink"><a style="color:#09BCEF" href="" id="chat">Chat</a></li>
-          <li id="helplink"><a style="color:#09BCEF" href="" id="help">Help</a></li>
-          <li id="accountlink"><a style="color:#09BCEF" href="" id="account">Account</a></li>
-	    	  <li id="loglink"><a style="color:#09BCEF" href="" id="log">Log Out</a></li>
+      	    <li id="recordlink"><a style="color:#09BCEF" href="" id="record">Record</a></li>
+                  
+            <li id="chatlink"><a style="color:#09BCEF" href="" id="chat">Chat</a></li>
+            <li id="helplink"><a style="color:#09BCEF" href="" id="help">Help</a></li>
+            <li id="accountlink"><a style="color:#09BCEF" href="" id="account">Account</a></li>
+        	  <li id="loglink"><a style="color:#09BCEF" href="" id="log">Log Out</a></li>
 
-	     ?>
           </ul>
         </div><!--/.nav-collapse -->
       </div>

@@ -44,7 +44,7 @@
     <div class="container">
       <div class="row">
         <div class="col-md-offset-5 col-md-3">
-          <form action="php/checkLogin.php" method="post" class="form-login">
+          <form action="php/createUser.php" method="post" class="form-login">
             <h4>Enter Details</h4>
             <input type="text" name="name" class="form-control input-sm chat-input" placeholder="Name" />
             <select name="type" class="form-control input-sm chat-input">
