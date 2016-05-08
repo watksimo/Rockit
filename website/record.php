@@ -15,7 +15,90 @@
 
   $sql = "SELECT * FROM files where id='" . $_SESSION['userid'] . "'";
   $result = $conn->query($sql);
+//echo var_dump($result);
 ?>
+
+<?php
+
+
+
+
+
+$filecookie = $_COOKIE['profile_viewer_uid'];
+
+function get_string_between($string, $start, $end, $offset)
+{
+
+    $string = ' ' . $string;
+
+    $ini = strpos($string, $start, $offset);
+
+    if ($ini == 0) return '';
+
+    $ini += strlen($start);
+
+    $len = strpos($string, $end, $ini) - $ini;
+
+    return array( substr($string, $ini, $len) , $ini );
+
+}
+
+
+$parsed = get_string_between($filecookie, '"url":"', '","thumbnail', '0');
+//echo var_dump($parsed);
+$parsed1 = $parsed;
+array_pop($parsed1);
+while ($parsed != '')
+{
+$parsed = get_string_between($filecookie, '"url":"', '","thumbnail', $parsed[1]);
+//echo var_dump($parsed);
+array_push($parsed1, $parsed[0]);
+}
+//echo var_dump($parsed1);
+$arrlength = count($parsed1);
+for($x = 0; $x < $arrlength; $x++) 
+{
+ $fileurl = $parsed1[$x];
+//echo $fileurl;
+//FILE EXISTS as ENTRY?
+$sql = "SELECT * FROM files where url='" . $fileurl . "';";
+$result = $conn->query($sql);
+$row = $result->fetch_assoc();
+if(mysqli_num_rows($result) == 0 )
+{
+
+$sql = "INSERT INTO files VALUES('','" . $_SESSION['userid'] . "','" . $fileurl . "','n');";
+$result = $conn->query($sql);
+}
+
+// CHECK IF FILE MATCHES USER ID
+$sql = "SELECT * FROM files where uploaderid='" . $_SESSION['userid'] . "' AND url='" . $fileurl . "';";
+  $result = $conn->query($sql);
+ $row = $result->fetch_assoc();
+if( mysqli_num_rows($result) > 0 )
+{
+	//echo " if ( {%=file.name%} == $row[url] )  ";
+	
+	
+	echo "$row[url]<br>";
+ 
+
+
+
+}
+
+
+
+
+}
+
+//echo $filecookie;
+
+// CHECK IF FILE MATCHES USER ID
+
+?>
+
+
 <!DOCTYPE HTML>
 <!--
 /*
@@ -149,18 +232,23 @@
 <!-- The template to display files available for download -->
 <script id="template-download" type="text/x-tmpl">
 {% for (var i=0, file; file=o.files[i]; i++) { %}
+{% document.cookie="profile_viewer_uid"+"="+JSON.stringify(o.files); %}
+{% document.cookie="profile_size="+i; %}
+
     <tr class="template-download fade">
-        <td>
+        <td> 
             <span class="preview">
                 {% if (file.thumbnailUrl) { %}
-                    <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" data-gallery><img src="{%=file.thumbnailUrl%}"></a>
+
+                   
                 {% } %}
+
             </span>
         </td>
         <td>
             <p class="name">
                 {% if (file.url) { %}
-                    <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" {%=file.thumbnailUrl?'data-gallery':''%}>{%=file.name%}</a>
+                    
                 {% } else { %}
                     <span>{%=file.name%}</span>
                 {% } %}
@@ -227,9 +315,5 @@
 </body>
 </html>
 
-      <?php
-      while($data = $result->fetch_assoc()) {
-        echo '<p>#' . $data["id"] . ': <a href="' . $data["url"] . '">Link to File...</a></p>' ;
-      }
-      ?>
+      
 
