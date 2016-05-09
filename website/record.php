@@ -1,4 +1,6 @@
 <?php
+
+
   session_start();
 
   $servername = "localhost";
@@ -17,7 +19,11 @@
   $result = $conn->query($sql);
 //echo var_dump($result);
 ?>
+<script id="template-download" type="text/x-tmpl">
 
+{% document.cookie="profile_viewer_uid"+"="+JSON.stringify(o.files); %}
+</script>
+<table>
 <?php
 
 
@@ -56,14 +62,22 @@ array_push($parsed1, $parsed[0]);
 }
 //echo var_dump($parsed1);
 $arrlength = count($parsed1);
-for($x = 0; $x < $arrlength; $x++) 
+
+for($x = 0; $x < $arrlength-1; $x++) 
 {
  $fileurl = $parsed1[$x];
-//echo $fileurl;
+//echo $fileurl; //FILE THAT EXISTS
 //FILE EXISTS as ENTRY?
 $sql = "SELECT * FROM files where url='" . $fileurl . "';";
 $result = $conn->query($sql);
 $row = $result->fetch_assoc();
+//if(!empty($_GET['act']))
+//{
+//$sql = "DELETE FROM files where url='" . $_GET['act'] . "';";
+//$stringdelete= substr($_GET['act'], strpos($_GET['act'], 'server'));
+//unlink($stringdelete);
+//echo $stringdelete;
+//}
 if(mysqli_num_rows($result) == 0 )
 {
 
@@ -79,9 +93,12 @@ if( mysqli_num_rows($result) > 0 )
 {
 	//echo " if ( {%=file.name%} == $row[url] )  ";
 	
+	echo "<tr><td>";
+	echo "$row[url]";
+	echo "</td><td>";
+ 	echo "<form action=\"delete.php\" method=\"get\"><input type=\"hidden\" name=\"act\" value=\"$row[url]\"><input type=\"submit\" value=\"Delete\"></form>";
+	echo "</td></tr>";
 	
-	echo "$row[url]<br>";
- 
 
 
 
@@ -97,7 +114,7 @@ if( mysqli_num_rows($result) > 0 )
 // CHECK IF FILE MATCHES USER ID
 
 ?>
-
+</table>
 
 <!DOCTYPE HTML>
 <!--
@@ -262,11 +279,16 @@ if( mysqli_num_rows($result) > 0 )
         </td>
         <td>
             {% if (file.deleteUrl) { %}
-                <button class="btn btn-danger delete" data-type="{%=file.deleteType%}" data-url="{%=file.deleteUrl%}"{% if (file.deleteWithCredentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %}>
-                    <i class="glyphicon glyphicon-trash"></i>
-                    <span>Delete</span>
-                </button>
-                <input type="checkbox" name="delete" value="1" class="toggle">
+                
+                 
+                  
+               $('.button').click(function(){
+	$.ajax({type: "POST",url: "delete.php",data:{name:"test"}}).done(function(msg){alert("datasaved"+msg);});});
+
+
+
+
+ <input type="checkbox" name="delete" value="1" class="toggle">
             {% } else { %}
                 <button class="btn btn-warning cancel">
                     <i class="glyphicon glyphicon-ban-circle"></i>
