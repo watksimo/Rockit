@@ -9,6 +9,7 @@
  * Licensed under the MIT license:
  * http://www.opensource.org/licenses/MIT
  */
+session_start();
 
 class UploadHandler
 {
@@ -50,6 +51,12 @@ class UploadHandler
             'user_dirs' => false,
             'mkdir_mode' => 0755,
             'param_name' => 'files',
+			// mysql connection settings
+'database' => 'rockit',
+'host' => 'localhost',
+'username' => 'root',
+'password' => '',
+// end
             // Set the following option to 'POST', if your server does not support
             // DELETE requests. This is a parameter sent to the client:
             'delete_type' => 'DELETE',
@@ -1059,6 +1066,7 @@ class UploadHandler
             $index, $content_range);
         $file->size = $this->fix_integer_overflow((int)$size);
         $file->type = $type;
+		
         if ($this->validate($uploaded_file, $file, $error, $index)) {
             $this->handle_form_data($file, $index);
             $upload_dir = $this->get_upload_path();
@@ -1066,6 +1074,7 @@ class UploadHandler
                 mkdir($upload_dir, $this->options['mkdir_mode'], true);
             }
             $file_path = $this->get_upload_path($file->name);
+			$file->upload_to_db = $this->add_img($file_path);
             $append_file = $content_range && is_file($file_path) &&
                 $file->size > $this->get_file_size($file_path);
             if ($uploaded_file && is_uploaded_file($uploaded_file)) {
@@ -1104,7 +1113,34 @@ class UploadHandler
         }
         return $file;
     }
-
+		function delete_img($delimg)
+		{
+		$delete_from_db = $this->query("DELETE FROM files WHERE url = '$delimg'") or die(mysql_error());
+		return $delete_from_db;
+		}
+		function add_img($whichimg)
+		{
+		
+		$add_to_db = $this->query("INSERT INTO files VALUES('','" . $_COOKIE["myCookie"] . "','" . $whichimg . "','n')") or die(mysql_error());
+		return $add_to_db;
+		}
+		function query($query) {
+		$database = $this->options['database'];
+		$host = $this->options['host'];
+		$username = $this->options['username'];
+		$password = $this->options['password'];
+		$link = mysql_connect($host,$username,$password);
+		if (!$link) {
+		die(mysql_error());
+		}
+		$db_selected = mysql_select_db($database);
+		if (!$db_selected) {
+		die(mysql_error());
+		}
+		$result = mysql_query($query);
+		mysql_close($link);
+		return $result;
+		}
     protected function readfile($file_path) {
         $file_size = $this->get_file_size($file_path);
         $chunk_size = $this->options['readfile_chunk_size'];

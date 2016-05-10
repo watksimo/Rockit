@@ -18,13 +18,13 @@ session_start();
 if(!empty($_GET['act']))
 {
 
-$stringdelete= substr($_GET['act'], strpos($_GET['act'], 'website'));
-$todelete = "/var/www/html/" . $stringdelete;
-echo $todelete;
+//$stringdelete= substr($_GET['act'], strpos($_GET['act'], 'website'));
+//$todelete = "/var/www/html/" . $stringdelete;
+//echo $todelete;
 $sql = "DELETE FROM files where url='" . $_GET['act'] . "';";
 echo $sql;
  $result = $conn->query($sql);
-unlink($todelete);
+unlink($_GET['act']);
 //echo $stringdelete;
 }
 

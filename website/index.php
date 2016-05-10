@@ -59,7 +59,7 @@
                                         $('#helplink').removeClass("active");
                                         $('#accountlink').removeClass("active");
 					$('#loglink').removeClass("active");
-					$('#bodycontent').load('record.php');
+					$('#bodycontent').load('fileupload.php');
 					return false;
 				});
 				$('#chat').click(function(){
