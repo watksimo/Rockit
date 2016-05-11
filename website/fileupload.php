@@ -193,7 +193,9 @@
     </tr>
 {% } %}
 </script>
-<p><a href="Image.html">System above not working? Click to access alternative method</a></p>
+<p><a href="Image.html">System above not working? Click to access alternative Image method</a></p>
+<p><a href="video.html">System above not working? Click to access alternative Video method</a></p>
+<p><a href="audio.html">System above not working? Click to access alternative Audio method</a></p>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <!-- The jQuery UI widget factory, can be omitted if jQuery UI is already included -->
 <script src="js/vendor/jquery.ui.widget.js"></script>
