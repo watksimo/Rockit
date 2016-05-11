@@ -313,7 +313,33 @@ class UploadHandler
     protected function get_file_object($file_name) {
         if ($this->is_valid_file_object($file_name)) {
             $file = new \stdClass();
-            $file->name = $file_name;
+			 $servername = "localhost";
+			  $username = "root";
+			  $password = "";
+			  $dbname = "rockit";
+
+			  // Create connection
+			  $conn = new mysqli($servername, $username, $password, $dbname);
+			  // Check connection
+			  if ($conn->connect_error) {
+				  die("Connection failed: " . $conn->connect_error);
+			  } 
+		
+		
+			$sql = "SELECT * FROM files WHERE uploaderid='" . $_SESSION['userid'] . "';";
+			$result = $conn->query($sql);
+			
+			while($row = mysqli_fetch_array($result)){
+			
+			$str = $this->get_upload_path($file_name);
+
+		
+				$str = strstr($str, 'server');
+			
+			
+			 if($row[url] == $this->get_upload_path($file_name) || $row[url] == $str)
+			 {
+			 $file->name = $file_name;
             $file->size = $this->get_file_size(
                 $this->get_upload_path($file_name)
             );
@@ -321,6 +347,7 @@ class UploadHandler
             foreach($this->options['image_versions'] as $version => $options) {
                 if (!empty($version)) {
                     if (is_file($this->get_upload_path($file_name, $version))) {
+					
                         $file->{$version.'Url'} = $this->get_download_url(
                             $file->name,
                             $version
@@ -330,11 +357,15 @@ class UploadHandler
             }
             $this->set_additional_file_properties($file);
             return $file;
+			 }
+			}
+            
         }
         return null;
     }
 
     protected function get_file_objects($iteration_method = 'get_file_object') {
+		
         $upload_dir = $this->get_upload_path();
         if (!is_dir($upload_dir)) {
             return array();
@@ -1115,6 +1146,7 @@ class UploadHandler
     }
 		function delete_img($delimg)
 		{
+		
 		$delete_from_db = $this->query("DELETE FROM files WHERE url = '$delimg'") or die(mysql_error());
 		return $delete_from_db;
 		}
@@ -1412,6 +1444,7 @@ class UploadHandler
                         $file = $this->get_upload_path($file_name, $version);
                         if (is_file($file)) {
                             unlink($file);
+							$this->delete_img($file_path);
                         }
                     }
                 }

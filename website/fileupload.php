@@ -30,11 +30,11 @@
 <meta name="description" content="File Upload widget with multiple file selection, drag&amp;drop support, progress bars, validation and preview images, audio and video for jQuery. Supports cross-domain, chunked and resumable file uploads and client-side image resizing. Works with any server-side platform (PHP, Python, Ruby on Rails, Java, Node.js, Go etc.) that supports standard HTML form file uploads.">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- Bootstrap styles -->
-<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="dependancies/bootstrap.min.css">
 <!-- Generic page styles -->
 <link rel="stylesheet" href="css/style.css">
 <!-- blueimp Gallery styles -->
-<link rel="stylesheet" href="//blueimp.github.io/Gallery/css/blueimp-gallery.min.css">
+<link rel="stylesheet" href="dependancies/blueimp-gallery.min.css">
 <!-- CSS to style the file input field as button and adjust the Bootstrap progress bars -->
 <link rel="stylesheet" href="css/jquery.fileupload.css">
 <link rel="stylesheet" href="css/jquery.fileupload-ui.css">
@@ -165,10 +165,6 @@
 {% } %}
 </script>
 <!-- The template to display files available for download -->
-
-
-
-
 <script id="template-download" type="text/x-tmpl">
 {% for (var i=0, file; file=o.files[i]; i++) { %}
     <tr class="template-download fade">
@@ -179,11 +175,29 @@
                 {% } %}
             </span>
         </td>
-      
-      
         <td>
-            
-            {% if (!file.deleteUrl) { %}
+            <p class="name">
+                {% if (file.url) { %}
+                    <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" {%=file.thumbnailUrl?'data-gallery':''%}>{%=file.name%}</a>
+                {% } else { %}
+                    <span>{%=file.name%}</span>
+                {% } %}
+            </p>
+            {% if (file.error) { %}
+                <div><span class="label label-danger">Error</span> {%=file.error%}</div>
+            {% } %}
+        </td>
+        <td>
+            <span class="size">{%=o.formatFileSize(file.size)%}</span>
+        </td>
+        <td>
+            {% if (file.deleteUrl) { %}
+                <button class="btn btn-danger delete" data-type="{%=file.deleteType%}" data-url="{%=file.deleteUrl%}"{% if (file.deleteWithCredentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %}>
+                    <i class="glyphicon glyphicon-trash"></i>
+                    <span>Delete</span>
+                </button>
+                <input type="checkbox" name="delete" value="1" class="toggle">
+            {% } else { %}
                 <button class="btn btn-warning cancel">
                     <i class="glyphicon glyphicon-ban-circle"></i>
                     <span>Cancel</span>
@@ -193,22 +207,25 @@
     </tr>
 {% } %}
 </script>
+		
+		
+		
 <p><a href="Image.html">System above not working? Click to access alternative Image method</a></p>
 <p><a href="video.html">System above not working? Click to access alternative Video method</a></p>
 <p><a href="audio.html">System above not working? Click to access alternative Audio method</a></p>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="dependancies/jquery.min.js"></script>
 <!-- The jQuery UI widget factory, can be omitted if jQuery UI is already included -->
 <script src="js/vendor/jquery.ui.widget.js"></script>
 <!-- The Templates plugin is included to render the upload/download listings -->
-<script src="//blueimp.github.io/JavaScript-Templates/js/tmpl.min.js"></script>
+<script src="dependancies/tmpl.min.js"></script>
 <!-- The Load Image plugin is included for the preview images and image resizing functionality -->
-<script src="//blueimp.github.io/JavaScript-Load-Image/js/load-image.all.min.js"></script>
+<script src="dependancies/load-image.all.min.js"></script>
 <!-- The Canvas to Blob plugin is included for image resizing functionality -->
-<script src="//blueimp.github.io/JavaScript-Canvas-to-Blob/js/canvas-to-blob.min.js"></script>
+<script src="dependancies/canvas-to-blob.min.js"></script>
 <!-- Bootstrap JS is not required, but included for the responsive demo navigation -->
-<script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script src="dependancies/bootstrap.min.js"></script>
 <!-- blueimp Gallery script -->
-<script src="//blueimp.github.io/Gallery/js/jquery.blueimp-gallery.min.js"></script>
+<script src="dependancies/jquery.blueimp-gallery.min.js"></script>
 <!-- The Iframe Transport is required for browsers without support for XHR file uploads -->
 <script src="js/jquery.iframe-transport.js"></script>
 <!-- The basic File Upload plugin -->
