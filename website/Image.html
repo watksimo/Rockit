@@ -1,0 +1,80 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+      <link href="css/bootstrap.min.css" rel="stylesheet">
+
+      <script src="dependancies/html5shiv.min.js"></script>
+      <script src="dependancies/respond.min.js"></script>
+      <script src="dependancies/jquery.min1.js"></script>
+		
+      <!--blob.min is used to resize the image b4 upload-->
+      <script src="dependancies/canvas-to-blob.min.js" type="text/javascript" charset="utf-8" ></script>
+
+<form action="imageupload.php" method="POST" enctype="multipart/form-data">
+ <label>Are you or someone else being bulllied: </label>
+  <input type="text" Are you or someone else being bulllied="meorsomeoneelse" maxlength="20" size="20" value="">
+  <br>
+	<input type="file" name="Image" accept="Image/*" capture>
+	<input type= "submit" value="Upload Image" >
+
+</form>
+<body>
+<script>
+
+var input = document.querySelector('input[type=file]');
+	input.onchange = function () {
+	 var file = input.files[0];
+
+  	upload(file);
+  	drawOnCanvas(file);   
+  	displayAsImage(file); 
+				     };
+
+	function upload(file) {
+  	 var form = new FormData(),
+      	  xhr = new XMLHttpRequest();
+
+        form.append('image', file);
+  	xhr.open('post', 'imageupload.php', true);
+  	xhr.send(form);
+			       }
+
+	function drawOnCanvas(file) {
+  	  var reader = new FileReader();
+
+  	 reader.onload = function (e) {
+          var dataURL = e.target.result,
+           c = document.querySelector('canvas'), 
+           ctx = c.getContext('2d'),
+           img = new Image();
+
+          img.onload = function() {
+           c.width = img.width;
+           c.height = img.height;
+           ctx.drawImage(img, 0, 0);
+    				  };
+
+          img.src = dataURL;
+  	};
+
+        reader.readAsDataURL(file);
+       }
+        function displayAsImage(file) {
+  	 var imgURL = URL.createObjectURL(file),
+      	     img = document.createElement('img');
+
+        img.onload = function() {
+         URL.revokeObjectURL(imgURL);
+  	};
+
+  	img.src = imgURL;
+  	document.body.appendChild(img);
+       }
+</script>
+</body>
+</head>
+</html>	

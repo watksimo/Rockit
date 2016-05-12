@@ -1,3 +1,4 @@
+
 <?php
 
 
@@ -19,7 +20,7 @@
  * http://www.opensource.org/licenses/MIT
  */
 -->
-
+<html lang="en">
 <head>
 <!-- Force latest IE rendering engine or ChromeFrame if installed -->
 <!--[if IE]>
@@ -41,31 +42,12 @@
 <!-- CSS adjustments for browsers with JavaScript disabled -->
 <noscript><link rel="stylesheet" href="css/jquery.fileupload-noscript.css"></noscript>
 <noscript><link rel="stylesheet" href="css/jquery.fileupload-ui-noscript.css"></noscript>
-<script type="text/javascript" charset="utf-8">
-			$(document).ready(function(){
-				
-				$('#record1').click(function(){
-					$('#recordlink').addClass("active");
-					$('#homelink').removeClass("active");
-					$('#chatlink').removeClass("active");
-                                        $('#helplink').removeClass("active");
-                                        $('#accountlink').removeClass("active");
-					$('#loglink').removeClass("active");
-					$('#bodycontent').load('record.php');
-					return false;
-				});
-				
-			});
-      </script>
 </head>
+<body>
 
-
-<div style="background:#09BCEF" class="jumbotron">
-        <h1 style="color:white">Report an Incident</h1>
-        <p style="color:white">Upload evidence of bullying, report an incident or view your previous uploads</p>
-      </div>
-
-
+<div class="container">
+    <h1>File Upload</h1>
+    <h2 class="lead">Please upload your evidence of bullying</h2>
 
     <br>
     <!-- The file upload form used as target for the file upload widget -->
@@ -111,6 +93,34 @@
         <table role="presentation" class="table table-striped"><tbody class="files"></tbody></table>
     </form>
     <br>
+
+</div>
+
+		<?php
+			  $servername = "localhost";
+			  $username = "root";
+			  $password = "";
+			  $dbname = "rockit";
+
+			  // Create connection
+			  $conn = new mysqli($servername, $username, $password, $dbname);
+			  // Check connection
+			  if ($conn->connect_error) {
+				  die("Connection failed: " . $conn->connect_error);
+			  } 
+		
+		
+			$sql = "SELECT * FROM files WHERE uploaderid='" . $_SESSION['userid'] . "';";
+			$result = $conn->query($sql);
+			
+			while($row = mysqli_fetch_array($result)){
+				echo "<table><tr>";
+				echo "<td>$row[url]</td>";
+				echo "<td><form action=\"delete.php\" method=\"get\"><input type=\"hidden\" name=\"act\" value=\"$row[url]\"><input type=\"submit\" value=\"Delete\"></form></td>";
+				echo "</tr></table>";
+				}
+			
+		?>
 
 
 <!-- The blueimp Gallery widget -->
@@ -168,7 +178,6 @@
         </td>
         <td>
             <p class="name">
-			
                 {% if (file.url) { %}
                     <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" {%=file.thumbnailUrl?'data-gallery':''%}>{%=file.name%}</a>
                 {% } else { %}
@@ -187,11 +196,8 @@
                 <button class="btn btn-danger delete" data-type="{%=file.deleteType%}" data-url="{%=file.deleteUrl%}"{% if (file.deleteWithCredentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %}>
                     <i class="glyphicon glyphicon-trash"></i>
                     <span>Delete</span>
- 
                 </button>
-								
-                <input type="checkbox" name="delete" value="1" class="toggle">		
-				
+                <input type="checkbox" name="delete" value="1" class="toggle">
             {% } else { %}
                 <button class="btn btn-warning cancel">
                     <i class="glyphicon glyphicon-ban-circle"></i>
@@ -201,15 +207,13 @@
         </td>
     </tr>
 {% } %}
-
 </script>
-	
 		
-<br>
-<br>
-<p><a href="" id="record1">Not working? Click here.</a></p>
 		
-
+		
+<p><a href="Image.html">System above not working? Click to access alternative Image method</a></p>
+<p><a href="video.html">System above not working? Click to access alternative Video method</a></p>
+<p><a href="audio.html">System above not working? Click to access alternative Audio method</a></p>
 <script src="dependancies/jquery.min.js"></script>
 <!-- The jQuery UI widget factory, can be omitted if jQuery UI is already included -->
 <script src="js/vendor/jquery.ui.widget.js"></script>
@@ -246,3 +250,5 @@
 <script src="js/cors/jquery.xdr-transport.js"></script>
 <![endif]-->
 
+</body>
+</html>
