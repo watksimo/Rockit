@@ -2,7 +2,7 @@
 session_start();
 
 if(!isset($_SESSION['user'])) {
-	header("location: ../login.php");
+	header("location: ../index.php");
 } else {
 	header("location: ../index.php");
 }
@@ -40,7 +40,7 @@ if ($result->num_rows > 0) {
     header("location: ../index.php");
     echo "Log in successful";
 } else {
-	header("location: ../login.php");
+	header("location: ../index.php");
 	echo "Log in UNsuccessful";
 }
 $conn->close();

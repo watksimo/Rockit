@@ -2,7 +2,7 @@
   session_start();
 
   if(!isset($_SESSION['user'])) {
-    header("location: login.php");
+    header("location: index.php");
   }
 
   $servername = "localhost";
@@ -92,7 +92,7 @@
 
 <div style="background:#09BCEF" class="jumbotron">
         <h1 style="color:white">Account</h1>
-        <p style="color:white">page for account option, update details other things</p>
+        <p style="color:white">Edit your details here</p>
       </div>
 
 
@@ -122,7 +122,7 @@
           <h3 class="panel-title">Groups</h3>
         </div>
         <div class="panel-body">
-          <h4>Current Groups</h4>
+          <h4>My Groups</h4>
             <select name="groupsList" class="form-control input-sm chat-input" id="groupsList">
               <?php
               while($groupData = $groupResult->fetch_assoc()) {
@@ -130,11 +130,12 @@
               }
               ?>
             </select>
+			<br>
           <button class="btn btn-primary btn-sm" id="rmvGroupBtn">Remove Group</button>
 
         <br><br>
 
-          <h4>Other Groups</h4>
+          <h4>Add Another Group</h4>
           <select name="notGroupsList" class="form-control input-sm chat-input" id="notGroupsList">
             <?php
             while($notGroupData = $notGroupResult->fetch_assoc()) {
@@ -142,6 +143,7 @@
             }
             ?>
           </select>
+		  <br>
           <button class="btn btn-primary btn-sm" id="addGroupBtn">Add Group</button>
         </div>
       </div>
@@ -152,7 +154,7 @@
           <h3 class="panel-title">Contacts</h3>
         </div>
         <div class="panel-body">
-          <h4>Current Contacts</h4>
+          <h4>My Contacts</h4>
             <select name="contactsList" class="form-control input-sm chat-input" id="contactsList">
               <?php
               while($contactData = $contactResult->fetch_assoc()) {
@@ -160,11 +162,12 @@
               }
               ?>
             </select>
+			<br>
           <button class="btn btn-primary btn-sm" id="rmvContactBtn">Remove Contact</button>
 
         <br><br>
 
-          <h4>Other Contacts</h4>
+          <h4>Add Another Contact</h4>
           <select name="notContactsList" class="form-control input-sm chat-input" id="notContactsList">
             <?php
             while($notContactData = $notContactResult->fetch_assoc()) {
@@ -172,6 +175,7 @@
             }
             ?>
           </select>
+		  <br>
           <button class="btn btn-primary btn-sm" id="addContactBtn">Add Contact</button>
         </div>
       </div>

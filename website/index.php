@@ -1,10 +1,8 @@
 <?php
   session_start();
-
   if(!isset($_SESSION['user'])) {
-    header("location: login.php");
+    //header("location: login.php");
   }
-
 ?>
 
 <!DOCTYPE html>
@@ -59,7 +57,7 @@
                                         $('#helplink').removeClass("active");
                                         $('#accountlink').removeClass("active");
 					$('#loglink').removeClass("active");
-					$('#bodycontent').load('record.php');
+					$('#bodycontent').load('fileupload.php');
 					return false;
 				});
 				$('#chat').click(function(){
@@ -103,7 +101,16 @@
 					
 					return false;
 				});
-
+                                $('#create').click(function(){
+					$('#accountlink').removeClass("active");
+					$('#recordlink').removeClass("active");
+					$('#chatlink').removeClass("active");
+                                        $('#homelink').removeClass("active");
+                                        $('#helplink').removeClass("active");
+					$('#loglink').removeClass("active");
+					$('#bodycontent').load('createAccount.php');
+					return false;
+				});
 				
 			});
       </script>
@@ -122,17 +129,24 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" id="mainhome" style="color:#09BCEF" href="#">Blast Bullying</a>
+          <a class="navbar-brand" id="mainhome" style="color:#09BCEF" href="#">Blast Off!</a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-      	    <li id="recordlink"><a style="color:#09BCEF" href="" id="record">Record</a></li>
-                  
+	     <?php
+		if(isset($_SESSION['user'])) {
+   		  echo '<li id="recordlink"><a style="color:#09BCEF" href="" id="record">Record</a></li>';
+  		}
+	     ?>
+            
             <li id="chatlink"><a style="color:#09BCEF" href="" id="chat">Chat</a></li>
             <li id="helplink"><a style="color:#09BCEF" href="" id="help">Help</a></li>
-            <li id="accountlink"><a style="color:#09BCEF" href="" id="account">Account</a></li>
-        	  <li id="loglink"><a style="color:#09BCEF" href="" id="log">Log Out</a></li>
-
+	    <?php
+		if(isset($_SESSION['user'])) {
+            	  echo '<li id="accountlink"><a style="color:#09BCEF" href="" id="account">Account</a></li>';
+	    	  echo '<li id="loglink"><a style="color:#09BCEF" href="" id="log">Log Out</a></li>';
+  		}
+	     ?>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
@@ -158,5 +172,3 @@
     <script src="js/bootstrap.min.js"></script>
   </body>
 </html>
-
-

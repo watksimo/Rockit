@@ -1,21 +1,11 @@
 <?php
+
+
+
+
   session_start();
-
-  $servername = "localhost";
-  $username = "root";
-  $password = "";
-  $dbname = "rockit";
-
-  // Create connection
-  $conn = new mysqli($servername, $username, $password, $dbname);
-  // Check connection
-  if ($conn->connect_error) {
-      die("Connection failed: " . $conn->connect_error);
-  } 
-
-  $sql = "SELECT * FROM files where id='" . $_SESSION['userid'] . "'";
-  $result = $conn->query($sql);
-?>
+  setcookie("myCookie", $_SESSION['userid']);
+  ?>
 <!DOCTYPE HTML>
 <!--
 /*
@@ -29,7 +19,7 @@
  * http://www.opensource.org/licenses/MIT
  */
 -->
-<html lang="en">
+
 <head>
 <!-- Force latest IE rendering engine or ChromeFrame if installed -->
 <!--[if IE]>
@@ -40,25 +30,44 @@
 <meta name="description" content="File Upload widget with multiple file selection, drag&amp;drop support, progress bars, validation and preview images, audio and video for jQuery. Supports cross-domain, chunked and resumable file uploads and client-side image resizing. Works with any server-side platform (PHP, Python, Ruby on Rails, Java, Node.js, Go etc.) that supports standard HTML form file uploads.">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- Bootstrap styles -->
-<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="dependancies/bootstrap.min.css">
 <!-- Generic page styles -->
 <link rel="stylesheet" href="css/style.css">
 <!-- blueimp Gallery styles -->
-<link rel="stylesheet" href="//blueimp.github.io/Gallery/css/blueimp-gallery.min.css">
+<link rel="stylesheet" href="dependancies/blueimp-gallery.min.css">
 <!-- CSS to style the file input field as button and adjust the Bootstrap progress bars -->
 <link rel="stylesheet" href="css/jquery.fileupload.css">
 <link rel="stylesheet" href="css/jquery.fileupload-ui.css">
 <!-- CSS adjustments for browsers with JavaScript disabled -->
 <noscript><link rel="stylesheet" href="css/jquery.fileupload-noscript.css"></noscript>
 <noscript><link rel="stylesheet" href="css/jquery.fileupload-ui-noscript.css"></noscript>
+<script type="text/javascript" charset="utf-8">
+			$(document).ready(function(){
+				
+				$('#record1').click(function(){
+					$('#recordlink').addClass("active");
+					$('#homelink').removeClass("active");
+					$('#chatlink').removeClass("active");
+                                        $('#helplink').removeClass("active");
+                                        $('#accountlink').removeClass("active");
+					$('#loglink').removeClass("active");
+					$('#bodycontent').load('record.php');
+					return false;
+				});
+				
+			});
+      </script>
 </head>
-<body>
 
-<div class="container">
-    <h1>Report</h1>
-    <h2 class="lead">Upload evidence of bullying, report an incident or view your previous uploads</h2>
-    
 
+<div style="background:#09BCEF" class="jumbotron">
+        <h1 style="color:white">Report an Incident</h1>
+        <p style="color:white">Upload evidence of bullying, report an incident or view your previous uploads</p>
+      </div>
+
+
+
+    <br>
     <!-- The file upload form used as target for the file upload widget -->
     <form id="fileupload" action="//jquery-file-upload.appspot.com/" method="POST" enctype="multipart/form-data">
         <!-- Redirect browsers with JavaScript disabled to the origin page -->
@@ -102,15 +111,15 @@
         <table role="presentation" class="table table-striped"><tbody class="files"></tbody></table>
     </form>
     <br>
-    
-</div>
+
+
 <!-- The blueimp Gallery widget -->
 <div id="blueimp-gallery" class="blueimp-gallery blueimp-gallery-controls" data-filter=":even">
     <div class="slides"></div>
     <h3 class="title"></h3>
-    <a class="prev">â€¹</a>
-    <a class="next">â€º</a>
-    <a class="close">Ã—</a>
+    <a class="prev">‹</a>
+    <a class="next">›</a>
+    <a class="close">×</a>
     <a class="play-pause"></a>
     <ol class="indicator"></ol>
 </div>
@@ -159,6 +168,7 @@
         </td>
         <td>
             <p class="name">
+			
                 {% if (file.url) { %}
                     <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" {%=file.thumbnailUrl?'data-gallery':''%}>{%=file.name%}</a>
                 {% } else { %}
@@ -177,8 +187,11 @@
                 <button class="btn btn-danger delete" data-type="{%=file.deleteType%}" data-url="{%=file.deleteUrl%}"{% if (file.deleteWithCredentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %}>
                     <i class="glyphicon glyphicon-trash"></i>
                     <span>Delete</span>
+ 
                 </button>
-                <input type="checkbox" name="delete" value="1" class="toggle">
+								
+                <input type="checkbox" name="delete" value="1" class="toggle">		
+				
             {% } else { %}
                 <button class="btn btn-warning cancel">
                     <i class="glyphicon glyphicon-ban-circle"></i>
@@ -188,20 +201,28 @@
         </td>
     </tr>
 {% } %}
+
 </script>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	
+		
+<br>
+<br>
+<p><a href="" id="record1">Not working? Click here.</a></p>
+		
+
+<script src="dependancies/jquery.min.js"></script>
 <!-- The jQuery UI widget factory, can be omitted if jQuery UI is already included -->
 <script src="js/vendor/jquery.ui.widget.js"></script>
 <!-- The Templates plugin is included to render the upload/download listings -->
-<script src="//blueimp.github.io/JavaScript-Templates/js/tmpl.min.js"></script>
+<script src="dependancies/tmpl.min.js"></script>
 <!-- The Load Image plugin is included for the preview images and image resizing functionality -->
-<script src="//blueimp.github.io/JavaScript-Load-Image/js/load-image.all.min.js"></script>
+<script src="dependancies/load-image.all.min.js"></script>
 <!-- The Canvas to Blob plugin is included for image resizing functionality -->
-<script src="//blueimp.github.io/JavaScript-Canvas-to-Blob/js/canvas-to-blob.min.js"></script>
+<script src="dependancies/canvas-to-blob.min.js"></script>
 <!-- Bootstrap JS is not required, but included for the responsive demo navigation -->
-<script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script src="dependancies/bootstrap.min.js"></script>
 <!-- blueimp Gallery script -->
-<script src="//blueimp.github.io/Gallery/js/jquery.blueimp-gallery.min.js"></script>
+<script src="dependancies/jquery.blueimp-gallery.min.js"></script>
 <!-- The Iframe Transport is required for browsers without support for XHR file uploads -->
 <script src="js/jquery.iframe-transport.js"></script>
 <!-- The basic File Upload plugin -->
@@ -222,14 +243,6 @@
 <script src="js/main.js"></script>
 <!-- The XDomainRequest Transport is included for cross-domain file deletion for IE 8 and IE 9 -->
 <!--[if (gte IE 8)&(lt IE 10)]>
-<script src="FileUpload/js/cors/jquery.xdr-transport.js"></script>
+<script src="js/cors/jquery.xdr-transport.js"></script>
 <![endif]-->
-</body>
-</html>
-
-      <?php
-      while($data = $result->fetch_assoc()) {
-        echo '<p>#' . $data["id"] . ': <a href="' . $data["url"] . '">Link to File...</a></p>' ;
-      }
-      ?>
 

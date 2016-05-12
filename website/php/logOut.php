@@ -6,7 +6,7 @@ unset($_SESSION['user']);
 unset($_SESSION['userid']);
 unset($_SESSION['type']);
 echo 'aaa';
-header("location: ../login.php");
+header("location: ../index.php");
 
 
 ?>

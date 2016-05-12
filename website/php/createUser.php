@@ -30,7 +30,7 @@ echo $sql;
 $result = $conn->query($sql);
 
 echo 'user created';
-header("location: ../login.php");
+header("location: ../index.php");
 
 $conn->close();
 

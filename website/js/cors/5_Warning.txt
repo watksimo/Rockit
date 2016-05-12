@@ -1,0 +1,8 @@
+
+BLOCKED FILE ALERT
+
+A file has been blocked due to the 'JS Files' rule.
+Context: 'jquery.xdr-transport.js'
+Disallowed due to 
+Ticket Number: '0a0c-5731-4ebb-000b'
+See your system administrator for further information. Copyright 1999-2013 McAfee, Inc.All Rights Reserved.http://www.mcafee.com
